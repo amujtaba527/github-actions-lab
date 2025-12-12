@@ -1,0 +1,27 @@
+name: Build Website (CI)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check if index.html exists
+        run: |
+          if [ -f "index.html" ]; then
+            echo "Success: index.html found."
+            exit 0
+          else
+            echo "Error: index.html not found!"
+            exit 1
+          fi
